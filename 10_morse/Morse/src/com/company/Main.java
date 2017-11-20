@@ -135,6 +135,9 @@ public class Main {
             case "!":
                 r = "——··——";
                 break;
+            default:
+                r = "";
+                break;
         }
         return r;
     }
@@ -142,24 +145,34 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            String texto;
             int n = 0;
 
+        do {
             System.out.println("Introduce un texto:");
-            String texto = br.readLine().toLowerCase();
+            texto = br.readLine().toLowerCase();
             n = texto.length();
 
-            for (int i = 0; i < n; i++) {
-
-                if (String.valueOf(texto.charAt(i)).equals("c") && texto.length() >= i+1){
-                    if (i+1 < texto.length() && String.valueOf(texto.charAt(i+1)).equals("h")){
-                        System.out.format("%s ",morse("ch"));
-                        i++;
+            if (!texto.equalsIgnoreCase("STOP")) {
+                for (int i = 0; i < n; i++) {
+                    if (String.valueOf(texto.charAt(i)).equals("c") && texto.length() >= i+1){
+                        if (i+1 < texto.length() && String.valueOf(texto.charAt(i+1)).equals("h")){
+                            System.out.format(morse("ch"));
+                            i++;
+                        } else {
+                            System.out.format(morse(String.valueOf(texto.charAt(i))));
+                        }
                     } else {
-                        System.out.format("%s ",morse(String.valueOf(texto.charAt(i))));
+                        System.out.format(morse(String.valueOf(texto.charAt(i))));
                     }
-                } else {
-                    System.out.format("%s ",morse(String.valueOf(texto.charAt(i))));
+
+                    if (texto.length() == i+1){
+                        System.out.format("\n\n");
+                    } else {
+                        System.out.format(" ");
+                    }
                 }
             }
-        }
+        } while (!texto.equalsIgnoreCase("STOP"));
+    }
 }
